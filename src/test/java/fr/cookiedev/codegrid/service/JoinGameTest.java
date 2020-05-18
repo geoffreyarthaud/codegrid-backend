@@ -15,6 +15,7 @@ import fr.cookiedev.codegrid.api.GameApi;
 import fr.cookiedev.codegrid.domain.Game;
 import fr.cookiedev.codegrid.repository.GameRepository;
 import fr.cookiedev.codegrid.vo.GameInfo;
+import fr.cookiedev.codegrid.vo.GameStatus;
 
 @ExtendWith(MockitoExtension.class)
 public class JoinGameTest {
@@ -57,6 +58,19 @@ public class JoinGameTest {
         // THEN
         assertThat(actualGame.getId()).isNotEmpty();
 
+    }
+
+    @Test
+    public void givenStartedGame_whenJoinGame_ThenException() {
+        // GIVEN
+        String name = "startedGame";
+        when(gameRepo.findByName(name)).thenReturn(Optional.of(Game.builder().id("id").name(name).status(GameStatus.BOTH_PLAY).build()));
+
+        // WHEN
+        Throwable thrown = catchThrowable(() -> gameApi.joinGame(name));
+
+        // THEN
+        assertThat(thrown).isInstanceOf(IllegalStateException.class);
     }
     
 }

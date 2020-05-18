@@ -9,8 +9,12 @@ import lombok.Data;
 public class GameInfo {
     final private String id;
     final private String name;
+    final private GameStatus status;
 
     public static GameInfo fromGame(Game game) {
-        return builder().id(game.getId()).name(game.getName()).build();
+        return builder()
+            .id(game.getId())
+            .name(game.getName())
+            .status(game.getStatus()).build();
     }
 }

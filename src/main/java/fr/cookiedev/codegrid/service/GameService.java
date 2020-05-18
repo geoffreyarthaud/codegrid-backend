@@ -4,6 +4,7 @@ import fr.cookiedev.codegrid.api.GameApi;
 import fr.cookiedev.codegrid.domain.Game;
 import fr.cookiedev.codegrid.repository.GameRepository;
 import fr.cookiedev.codegrid.vo.GameInfo;
+import fr.cookiedev.codegrid.vo.GameStatus;
 
 public class GameService implements GameApi {
 
@@ -15,7 +16,11 @@ public class GameService implements GameApi {
 
 	@Override
 	public GameInfo joinGame(final String name) {
-		return GameInfo.fromGame(gameRepository.findByName(name).orElse(Game.create(name)));
+		GameInfo gameInfo = GameInfo.fromGame(gameRepository.findByName(name).orElse(Game.create(name)));
+		if (gameInfo.getStatus() != GameStatus.SETUP) {
+			throw new IllegalStateException("This game has already started and cannot be joined");
+		}
+		return gameInfo;
 	}
     
 }
