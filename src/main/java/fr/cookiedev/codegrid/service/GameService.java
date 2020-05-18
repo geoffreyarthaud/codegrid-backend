@@ -1,11 +1,14 @@
 package fr.cookiedev.codegrid.service;
 
+import javax.enterprise.context.ApplicationScoped;
+
 import fr.cookiedev.codegrid.api.GameApi;
 import fr.cookiedev.codegrid.domain.Game;
 import fr.cookiedev.codegrid.repository.GameRepository;
 import fr.cookiedev.codegrid.vo.GameInfo;
 import fr.cookiedev.codegrid.vo.GameStatus;
 
+@ApplicationScoped
 public class GameService implements GameApi {
 
     private final GameRepository gameRepository;
