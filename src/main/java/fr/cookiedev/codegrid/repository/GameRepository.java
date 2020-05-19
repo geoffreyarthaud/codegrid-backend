@@ -8,4 +8,10 @@ public interface GameRepository {
 
 	Optional<Game> findByName(String id);
 
+	Optional<Game> findByTeamId(String teamId);
+
+	Optional<Game> findById(String gameId);
+
+	void save(Game game);
+
 }

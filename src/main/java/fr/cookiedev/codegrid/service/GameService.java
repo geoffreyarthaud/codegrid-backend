@@ -7,6 +7,8 @@ import fr.cookiedev.codegrid.domain.Game;
 import fr.cookiedev.codegrid.repository.GameRepository;
 import fr.cookiedev.codegrid.vo.GameInfo;
 import fr.cookiedev.codegrid.vo.GameStatus;
+import fr.cookiedev.codegrid.vo.TeamCamp;
+import fr.cookiedev.codegrid.vo.TeamInfo;
 
 @ApplicationScoped
 public class GameService implements GameApi {
@@ -24,6 +26,15 @@ public class GameService implements GameApi {
 			throw new IllegalStateException("This game has already started and cannot be joined");
 		}
 		return gameInfo;
+	}
+
+	@Override
+	public TeamInfo joinTeam(String gameId, TeamCamp camp) {
+		Game game = gameRepository.findById(gameId).orElseThrow(() -> new IllegalArgumentException("Incorrect game id"));
+		if (game.getStatus() != GameStatus.SETUP) {
+			throw new IllegalStateException("This game has already started and cannot be joined");
+		}
+		return TeamInfo.fromGame(game, camp);
 	}
     
 }
