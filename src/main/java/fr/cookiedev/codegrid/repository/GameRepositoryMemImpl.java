@@ -40,7 +40,7 @@ public class GameRepositoryMemImpl implements GameRepository {
 	}
 
 	@Override
-	public void save(Game game) {
+	public synchronized void save(Game game) {
 		gamesFromTeamId.put(game.getTeamId(TeamCamp.A), game);
 		gamesFromTeamId.put(game.getTeamId(TeamCamp.B), game);
 		gamesFromName.put(game.getName(), game);

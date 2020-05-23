@@ -19,7 +19,7 @@ public class Game {
     @NonNull
     private final String name;
 
-    private final Map<TeamCamp, String> teamIds = new EnumMap<>(TeamCamp.class);
+    private final Map<TeamCamp, String> teamIds = computeTeamIds();
     
     @Builder.Default
     private GameStatus status = GameStatus.SETUP;
@@ -37,5 +37,12 @@ public class Game {
         }
 
 		return teamId;
-	}
+    }
+    
+    private static Map<TeamCamp, String> computeTeamIds() {
+        Map<TeamCamp, String> teamIds = new EnumMap<>(TeamCamp.class);
+        teamIds.put(TeamCamp.A, UUID.randomUUID().toString());
+        teamIds.put(TeamCamp.B, UUID.randomUUID().toString());
+        return teamIds;
+    }
 }
